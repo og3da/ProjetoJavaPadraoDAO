@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ProjetoJavaDAO/ProjetoJavaDAO.iml" filepath="$PROJECT_DIR$/ProjetoJavaDAO/ProjetoJavaDAO.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ProjetoJavaPadraoDAO.iml" filepath="$PROJECT_DIR$/.idea/ProjetoJavaPadraoDAO.iml" />
     </modules>
   </component>
