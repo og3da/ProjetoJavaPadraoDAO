@@ -1,6 +1,8 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,7 +12,7 @@ public class Seller implements Serializable {
     private Integer id;
     private String name;
     private String email;
-    private Date bityhDate;
+    private Date birthDate;
     private Double baseSalary;
 
     private Department department; // associação
@@ -18,11 +20,11 @@ public class Seller implements Serializable {
     public Seller() {
     }
 
-    public Seller(Integer id, String name, String email, Date bityhDate, Double baseSalary, Department department) {
+    public Seller(Integer id, String name, String email, Date birthDate, Double baseSalary, Department department) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.bityhDate = bityhDate;
+        this.birthDate = birthDate;
         this.baseSalary = baseSalary;
         this.department = department;
     }
@@ -51,12 +53,12 @@ public class Seller implements Serializable {
         this.email = email;
     }
 
-    public Date getBityhDate() {
-        return bityhDate;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBityhDate(Date bityhDate) {
-        this.bityhDate = bityhDate;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public Double getBaseSalary() {
@@ -94,7 +96,7 @@ public class Seller implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", bityhDate=" + bityhDate +
+                ", birthDate=" + birthDate +
                 ", baseSalary=" + baseSalary +
                 ", department=" + department +
                 '}';
