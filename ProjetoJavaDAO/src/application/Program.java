@@ -40,5 +40,15 @@ public class Program {
         sellerDao.update(sellerUpdate);
         System.out.println("Updated! New info = " + seller2.toString());
         System.out.println("===  ===");
+
+        System.out.println("\n=== TEST 6: seller deleteById ===");
+        sellerDao.deleteById(10);
+        System.out.println("Seller Deleted!");
+        System.out.println("===  ===");
+
+        System.out.println("\n=== TEST 7: seller findAll to validate seller deleted ===");
+        List<Seller> sellerList3 = sellerDao.findAll();
+        sellerList3.forEach(System.out::println);
+        System.out.println("===  ===");
     }
 }

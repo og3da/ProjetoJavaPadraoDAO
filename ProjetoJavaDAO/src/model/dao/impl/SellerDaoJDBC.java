@@ -113,7 +113,33 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null; // var p/consulta SQL
+        ResultSet rs = null; // var p/resultado da consulta
 
+        try {
+            conn.setAutoCommit(false); // desativando auto confirmação de transações
+            // QUERY
+            st = conn.prepareStatement("DELETE FROM seller \n" +
+                            "WHERE Id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            // VALUES
+            st.setInt(1, id);
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                rs = st.getGeneratedKeys();
+                DB.closeResultSet(rs);
+            } else {
+                throw new DbException("unexpected error, no rows affected!");
+            }
+
+            conn.commit(); // confirmando transação
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
 
     @Override
