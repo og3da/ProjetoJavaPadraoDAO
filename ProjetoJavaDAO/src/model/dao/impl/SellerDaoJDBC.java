@@ -31,9 +31,9 @@ public class SellerDaoJDBC implements SellerDao {
             conn.setAutoCommit(false); // desativando auto confirmação de transações
             // QUERY
             st = conn.prepareStatement("INSERT INTO seller\n" +
-                    "(Name, Email, BirthDate, BaseSalary, DepartmentId) \n" +
-                    "VALUES \n" +
-                    "(?, ?, ?, ?, ?)",
+                            "(Name, Email, BirthDate, BaseSalary, DepartmentId) \n" +
+                            "VALUES \n" +
+                            "(?, ?, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
             // VALUES
             st.setString(1, obj.getName());
@@ -69,7 +69,46 @@ public class SellerDaoJDBC implements SellerDao {
 
     @Override
     public void update(Seller obj) {
+        PreparedStatement st = null; // var p/consulta SQL
 
+        try {
+            conn.setAutoCommit(false); // desativando auto confirmação de transações
+            // QUERY
+            st = conn.prepareStatement("UPDATE seller \n" +
+                            "SET Name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? \n" +
+                            "WHERE Id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+            // VALUES
+            st.setString(1, obj.getName());
+            st.setString(2, obj.getEmail());
+            st.setDate(3, obj.getBirthDate());
+            st.setDouble(4, obj.getBaseSalary());
+            st.setInt(5, obj.getDepartment().getId());
+            st.setInt(6, obj.getId());
+
+            int rowsAffected = st.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet rs = st.getGeneratedKeys();
+                if (rs.next()) {
+                    int id = rs.getInt(1);
+                    obj.setId(id);
+                }
+                DB.closeResultSet(rs);
+            } else {
+                throw new DbException("unexpected error, no rows affected!");
+            }
+
+            conn.commit(); // confirmando transação
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+                throw new DbException("transaction rolled back, cause: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback, cause: " + e1.getMessage());
+            }
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override

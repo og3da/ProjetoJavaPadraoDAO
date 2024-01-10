@@ -34,5 +34,11 @@ public class Program {
         sellerDao.insert(seller2);
         System.out.println("Inserted! New id = " + seller2.getId());
         System.out.println("===  ===");
+
+        System.out.println("\n=== TEST 5: seller update ===");
+        Seller sellerUpdate = new Seller(9, "gregory", "gregory@mail.com", new Date(01/01/2024), 4500.00, department);
+        sellerDao.update(sellerUpdate);
+        System.out.println("Updated! New info = " + seller2.toString());
+        System.out.println("===  ===");
     }
 }
